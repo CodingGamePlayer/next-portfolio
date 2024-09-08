@@ -28,8 +28,8 @@ const NavItem: React.FC<NavItemProps> = ({ href, icon, text }) => {
   return (
     <a
       href={href}
-      className={`text-[#45505b] hover:text-white transition-all duration-300 flex items-center py-7 rounded-full bg-[#f2f3f5] hover:bg-[#0563bb] group relative mb-4 ${
-        isActive ? "bg-[#0563bb] text-white" : ""
+      className={` hover:text-white transition-all duration-300 flex items-center py-7 rounded-full bg-[#f2f3f5] hover:bg-[#0563bb] group relative mb-4 ${
+        isActive ? "bg-[#0563bb] text-[#45505b]" : "text-[#45505b]"
       }`}
       style={{
         width: "56px",
