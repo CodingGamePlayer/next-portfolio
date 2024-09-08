@@ -1,5 +1,7 @@
+import About from "./components/About";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import Resume from "./components/Resume";
 
 export default function Home() {
   return (
@@ -12,11 +14,11 @@ export default function Home() {
       <Hero />
       {/*  */}
       <main id="main">
-        {/* <About />
+        <About />
         <Resume />
-        <Portfolio />
-        <Study />
-        <Contact /> */}
+        {/* <Portfolio /> */}
+        {/* <Study /> */}
+        {/* <Contact /> */}
       </main>
       {/* <Footer /> */}
     </>
