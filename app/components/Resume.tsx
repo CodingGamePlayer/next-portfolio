@@ -14,7 +14,7 @@ const Resume: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="px-[200px]">
+          <div>
             <h3 className="text-2xl font-bold text-[#45505b] mb-6">
               Education
             </h3>
