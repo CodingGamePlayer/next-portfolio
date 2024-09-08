@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
           김종식 포트폴리오
         </h1>
         <p className="text-[#45505b] text-2xl font-['Poppins',sans-serif] mb-4">
-          I'm <span ref={typedRef} className="text-[#0563bb] ml-2"></span>
+          I&apos;m <span ref={typedRef} className="text-[#0563bb] ml-2"></span>
         </p>
         <div className="social-links mt-8">
           <a
