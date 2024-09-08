@@ -4,12 +4,14 @@ interface CalendarProps {
   currentDate: Date;
   setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
   studyDates: string[];
+  onDateClick: (date: string) => void; // 새로운 prop 추가
 }
 
 const Calendar: React.FC<CalendarProps> = ({
   currentDate,
   setCurrentDate,
   studyDates,
+  onDateClick, // 새로운 prop
 }) => {
   const renderCalendar = () => {
     const year = currentDate.getFullYear();
@@ -47,6 +49,11 @@ const Calendar: React.FC<CalendarProps> = ({
                 }
                 ${isToday ? "bg-yellow-100 font-bold" : ""}
               `}
+              onClick={() =>
+                onDateClick(
+                  `${year}-${String(month + 1).padStart(2, "0")}-${date}`
+                )
+              } // 클릭 핸들러 추가
             >
               <span className="inline-block w-8 h-8 leading-8 rounded-full">
                 {day}

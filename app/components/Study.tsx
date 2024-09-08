@@ -2,10 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import Calendar from "./Calendar";
+import ReactMarkdown from "react-markdown";
 
 const Study: React.FC = () => {
   const [studyDates, setStudyDates] = useState<string[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDateContent, setSelectedDateContent] = useState<string | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchStudyDates(currentDate.getFullYear(), currentDate.getMonth() + 1);
@@ -17,10 +23,29 @@ const Study: React.FC = () => {
         `/api/study-dates?year=${year}&month=${month}`
       );
       const data = await response.json();
-      console.log(data);
       setStudyDates(data.dates);
     } catch (error) {
       console.error("Error fetching study dates:", error);
+      setError("학습 날짜를 가져오는 데 실패했습니다.");
+    }
+  };
+
+  const handleDateClick = async (date: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`/api/study-content?date=${date}`);
+      if (!response.ok) {
+        throw new Error("콘텐츠를 가져오는 데 실패했습니다.");
+      }
+      const content = await response.text();
+      setSelectedDateContent(content);
+    } catch (error) {
+      console.error("Error fetching study content:", error);
+      setError("학습 내용을 가져오는 데 실패했습니다.");
+      setSelectedDateContent(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,13 +66,28 @@ const Study: React.FC = () => {
               currentDate={currentDate}
               setCurrentDate={setCurrentDate}
               studyDates={studyDates}
+              onDateClick={handleDateClick}
             />
           </div>
           <div className="w-full lg:w-1/2 px-4 mb-8">
-            <div id="study-content" className="h-[500px] overflow-y-auto"></div>
+            <div
+              id="study-content"
+              className="h-[500px] overflow-y-auto bg-gray-100 p-4 rounded-lg"
+            >
+              {isLoading ? (
+                <p>로딩 중...</p>
+              ) : error ? (
+                <p className="text-red-500">{error}</p>
+              ) : selectedDateContent ? (
+                <ReactMarkdown className="prose max-w-none">
+                  {selectedDateContent}
+                </ReactMarkdown>
+              ) : (
+                <p>날짜를 선택하면 학습 내용이 여기에 표시됩니다.</p>
+              )}
+            </div>
           </div>
         </div>
-        {/* 기존의 스킬 카드 부분은 그대로 유지 */}
       </div>
     </section>
   );
